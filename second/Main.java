@@ -6,6 +6,8 @@ import java.util.Queue;
 public class Main {
     public static void main(String[] args) {
 
+        // List per level exercise
+        
         // Create a binary tree
         TreeNode root = new TreeNode(3);
         root.left = new TreeNode(9);
