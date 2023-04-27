@@ -1,6 +1,9 @@
 
 public class Main {
     public static void main(String[] args) {
+        
+        // Handling duplicates in BSTs exercises
+        
         BST bst = new BST();
 
         // Insert values into the BST
