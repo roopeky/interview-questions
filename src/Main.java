@@ -1,44 +1,49 @@
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
 public class Main {
     public static void main(String[] args) {
 
-        TreeNode p = new TreeNode(3);
-        p.left = new TreeNode(4);
-        p.right = new TreeNode(5);
-        p.left.left = new TreeNode(1);
-        p.left.right = new TreeNode(2);
+        TreeNode root = new TreeNode(3);
+        root.left = new TreeNode(9);
+        root.right = new TreeNode(20);
+        root.right.left = new TreeNode(15);
+        root.right.right = new TreeNode(7);
 
-        TreeNode q = new TreeNode(4);
-        q.left = new TreeNode(1);
-        q.right = new TreeNode(2);
+        List<List<Integer>> levels = levelOrder(root);
 
-        boolean isSubtree = isSubtree(p, q);
-
-        System.out.println(isSubtree);
+        System.out.println(levels);
     }
 
-    public static boolean isSubtree(TreeNode p, TreeNode q) {
-        if (p == null) {
-            return false;
+    public static List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) {
+            return result;
         }
-        if (q == null) {
-            return true;
-        }
-        if (isIdentical(p, q)) {
-            return true;
-        }
-        return isSubtree(p.left, q) || isSubtree(p.right, q);
-    }
 
-    public static boolean isIdentical(TreeNode p, TreeNode q) {
-        if (p == null && q == null) {
-            return true;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            int levelSize = queue.size();
+            List<Integer> currentLevel = new ArrayList<>();
+
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode node = queue.poll();
+                currentLevel.add(node.val);
+
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+            result.add(currentLevel);
         }
-        if (p == null || q == null) {
-            return false;
-        }
-        if (p.val != q.val) {
-            return false;
-        }
-        return isIdentical(p.left, q.left) && isIdentical(p.right, q.right);
+
+        return result;
     }
 }
